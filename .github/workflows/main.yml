@@ -8,7 +8,6 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
@@ -20,9 +19,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"   # последняя 3.x, это ОК
+          python-version: "3.x"
 
       - name: Run unit tests
-        working-directory: geometric_lib
         run: |
-          python -m unittest discover -v
+          python -m unittest discover -v -s tests
