@@ -1,37 +1,28 @@
-name: лаба 5
+name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: ["**"]
   pull_request:
-    branches: [ main, master ]
 
 jobs:
-  tests:
-    name: прогнать тесты на Ubuntu и Windows
+  test:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: [3.10]
 
     steps:
-      - name: скачать репозиторий
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: установить Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.x"   # последняя 3.x, это ОК
 
-      - name: показать структуру проекта
-        run: |
-          pwd
-          ls -R .
-          echo "--- geometric_lib ---"
-          ls -R geometric_lib || true
-
-      - name: прогон тестов
+      - name: Run unit tests
         working-directory: geometric_lib
-        run: python -m unittest discover -s tests
+        run: |
+          python -m unittest discover -v
