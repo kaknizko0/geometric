@@ -1,30 +1,26 @@
-name: лаба 5
+name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: ["**"]
   pull_request:
-    branches: [ main, master ]
 
 jobs:
-  tests:
-    name: прогнать тесты на Ubuntu и Windows
+  test:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
 
-
     steps:
-      - name: скачать репозиторий
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: установить Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-            python-version: "3.x"
-      - name: прогон тестов
-        working-directory: geometric_lib
+          python-version: "3.x"
+
+      - name: Run unit tests
         run: |
           python -m unittest -v square triangle rectangle circle
