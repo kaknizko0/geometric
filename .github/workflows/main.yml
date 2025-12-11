@@ -1,4 +1,4 @@
-name: CI
+name: лаба 5
 
 on:
   push:
@@ -20,19 +20,10 @@ jobs:
       - name: скачать репозиторий
         uses: actions/checkout@v4
 
-      - name: установка Python
+      - name: установить Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: показ структуры проекта
-        run: |
-          pwd
-          ls
-          echo "--- geometric_lib ---"
-          ls geometric_lib
-          echo "--- geometric_lib/tests ---"
-          ls geometric_lib/tests
 
       - name: прогон тестов
         working-directory: geometric_lib
